@@ -1,0 +1,47 @@
+services:
+  whatsappmessagesapi:
+    build:
+      context: ./WhatsAppMessagesApiNet
+      dockerfile: Dockerfile
+    ports:
+      - "5265:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - ConnectionStrings__SqlServer=Server=sqlserver;Database=WhatsAppMessagesDb;User=sa;Password=YourStrongPassword123!;TrustServerCertificate=True;MultipleActiveResultSets=True
+    depends_on:
+      - sqlserver
+    networks:
+      - whatsappmessagesnet
+
+  whatsappmessagesangular:
+    build:
+      context: ./WhatsAppMessagesAngular
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80"
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - whatsappmessagesapi
+    networks:
+      - whatsappmessagesnet
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - SA_PASSWORD=YourStrongPassword123!
+      - ACCEPT_EULA=Y
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    networks:
+      - whatsappmessagesnet
+
+volumes:
+  sqlserver_data:
+
+networks:
+  whatsappmessagesnet:
+    driver: bridge

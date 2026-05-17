@@ -1,0 +1,118 @@
+.sidebar {
+  width: 240px;
+  height: 100vh;
+  background: var(--color-white);
+  border-right: 1px solid var(--color-gray-200);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 100;
+}
+
+.sidebar-header {
+  padding: var(--spacing-md);
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--color-gray-200);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: var(--spacing-md);
+  overflow-y: auto;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: 0.75rem var(--spacing-md);
+  margin-bottom: var(--spacing-xs);
+  border-radius: var(--radius-md);
+  color: var(--color-gray-700);
+  text-decoration: none;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--color-gray-100);
+    color: var(--color-gray-900);
+  }
+
+  &.active {
+    background-color: rgba(232, 116, 97, 0.1);
+    color: var(--color-primary);
+    font-weight: 600;
+
+    .nav-icon::before {
+      color: var(--color-primary);
+    }
+  }
+}
+
+.nav-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  &::before {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  &[data-icon="ticket"]::before {
+    content: '🎫';
+    font-size: 18px;
+  }
+
+  &[data-icon="users"]::before {
+    content: '👥';
+    font-size: 18px;
+  }
+
+  &[data-icon="briefcase"]::before {
+    content: '💼';
+    font-size: 18px;
+  }
+
+  &[data-icon="team"]::before {
+    content: '👨‍👩‍👧‍👦';
+    font-size: 18px;
+  }
+
+  &[data-icon="activity"]::before {
+    content: '📜';
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform var(--transition-base);
+
+    &.open {
+      transform: translateX(0);
+    }
+  }
+}

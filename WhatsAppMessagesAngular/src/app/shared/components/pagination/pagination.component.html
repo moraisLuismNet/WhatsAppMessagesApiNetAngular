@@ -1,0 +1,38 @@
+<div class="pagination-container">
+  <div class="pagination-info">
+    Showing {{ totalItems > 0 ? (currentPage - 1) * pageSize + 1 : 0 }} to {{ Math.min(currentPage * pageSize, totalItems) }} of {{ totalItems }} results
+  </div>
+  
+  <div class="pagination-controls">
+    <button 
+      class="pagination-btn" 
+      [disabled]="currentPage === 1 || totalItems === 0"
+      (click)="onPageChange(currentPage - 1)">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M15 18l-6-6 6-6" />
+      </svg>
+      <span>Previous</span>
+    </button>
+
+    <div class="pagination-pages">
+      @for (page of pages; track page) {
+        <button 
+          class="page-number" 
+          [class.active]="page === currentPage"
+          (click)="onPageChange(page)">
+          {{ page }}
+        </button>
+      }
+    </div>
+
+    <button 
+      class="pagination-btn" 
+      [disabled]="currentPage === totalPages || totalItems === 0"
+      (click)="onPageChange(currentPage + 1)">
+      <span>Next</span>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M9 18l6-6-6-6" />
+      </svg>
+    </button>
+  </div>
+</div>

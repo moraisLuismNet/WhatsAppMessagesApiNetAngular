@@ -1,0 +1,71 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <div class="logo">
+        <img src="/logo.jpg" alt="WhatsApp Logo" class="logo-img">
+      </div>
+      <h1>WhatsApp Messages</h1>
+      <p>Sign in to your account to continue</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
+      <div class="form-group">
+        <label for="email" class="form-label">Email Address</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          class="form-input"
+          [class.error]="email?.invalid && email?.touched"
+          placeholder="Enter your email"
+        />
+        @if (email?.invalid && email?.touched) {
+          <div class="error-message">
+            @if (email?.errors?.['required']) { <span>Email is required</span> }
+            @if (email?.errors?.['email']) { <span>Please enter a valid email</span> }
+          </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="password" class="form-label">Password</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          class="form-input"
+          [class.error]="password?.invalid && password?.touched"
+          placeholder="Enter your password"
+        />
+        @if (password?.invalid && password?.touched) {
+          <div class="error-message">
+            @if (password?.errors?.['required']) { <span>Password is required</span> }
+            @if (password?.errors?.['minlength']) { <span>Password must be at least 6 characters</span> }
+          </div>
+        }
+      </div>
+
+      @if (errorMessage) {
+        <div class="alert alert-error">
+          {{ errorMessage }}
+        </div>
+      }
+
+      <button
+        type="submit"
+        class="btn btn-primary btn-block"
+        [disabled]="loginForm.invalid || isLoading"
+      >
+        @if (!isLoading) {
+          <span>Sign In</span>
+        } @else {
+          <span class="spinner-small"></span>
+        }
+      </button>
+    </form>
+
+    <div class="auth-footer">
+      <p>Don't have an account? <a routerLink="/auth/register">Sign up</a></p>
+    </div>
+  </div>
+</div>

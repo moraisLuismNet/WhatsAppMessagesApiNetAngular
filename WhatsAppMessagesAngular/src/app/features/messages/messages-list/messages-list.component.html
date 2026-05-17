@@ -1,0 +1,90 @@
+<div class="messages-container">
+  <div class="messages-header">
+    <div class="header-content">
+      <h1>Messages</h1>
+      @if (isAdmin) {
+        <p>View and manage all messages in the system.</p>
+      }
+    </div>
+    @if (isAdmin) {
+      <a routerLink="/messages/new" class="btn btn-primary">+ New Message</a>
+    }
+  </div>
+
+  @if (isAdmin) {
+    <div class="filter-bar">
+      <label for="statusFilter">Status:</label>
+      <select id="statusFilter" [(ngModel)]="statusFilter" (change)="onStatusFilterChange()">
+        @for (opt of statusOptions; track opt) {
+          <option [value]="opt">{{ opt }}</option>
+        }
+      </select>
+    </div>
+  }
+
+  @if (isLoading) {
+    <div class="loading-container">
+      <div class="spinner"></div>
+    </div>
+  }
+
+  @if (errorMessage) {
+    <div class="alert alert-error">{{ errorMessage }}</div>
+  }
+
+  @if (!isLoading && !errorMessage) {
+    <div class="messages-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            @if (isAdmin) {
+              <th>To</th>
+              <th>Email</th>
+            }
+            <th>Message</th>
+            @if (isAdmin) {
+              <th>Status</th>
+            }
+          </tr>
+        </thead>
+        <tbody>
+          @for (msg of paginatedMessages; track msg.id) {
+            <tr class="message-row">
+              <td>{{ formatDate(msg.createdAt) }}</td>
+              @if (isAdmin) {
+                <td>{{ msg.to }}</td>
+                <td>{{ getRecipientEmail(msg) }}</td>
+              }
+              <td class="message-body">{{ msg.body }}</td>
+              @if (isAdmin) {
+                <td>
+                  <span class="badge" [ngClass]="{
+                    'badge-pending': msg.status === 'Pending',
+                    'badge-sent': msg.status === 'Sent',
+                    'badge-failed': msg.status === 'Failed'
+                  }">{{ msg.status }}</span>
+                </td>
+              }
+            </tr>
+          }
+        </tbody>
+      </table>
+
+      @if (filteredMessages.length === 0) {
+        <div class="empty-state">
+          <p>No messages found</p>
+        </div>
+      }
+
+      @if (filteredMessages.length > pageSize) {
+        <app-pagination
+          [totalItems]="filteredMessages.length"
+          [pageSize]="pageSize"
+          [currentPage]="currentPage"
+          (pageChange)="onPageChange($event)"
+        />
+      }
+    </div>
+  }
+</div>

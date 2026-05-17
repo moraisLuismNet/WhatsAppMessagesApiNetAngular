@@ -1,0 +1,104 @@
+.header {
+  height: 64px;
+  background: var(--color-white);
+  border-bottom: 1px solid var(--color-gray-200);
+  position: fixed;
+  top: 0;
+  left: 240px;
+  right: 0;
+  z-index: 90;
+}
+
+.header-content {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--spacing-xl);
+}
+
+.page-title {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  color: var(--color-gray-900);
+  margin: 0;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.user-display-group {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.user-avatar-small {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: var(--font-size-xs);
+}
+
+.user-text-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+@media (max-width: 768px) {
+  .header {
+    left: 0;
+  }
+
+  .user-info {
+    display: none;
+  }
+}
+
+.user-role-display {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-gray-700);
+  background-color: var(--color-gray-100);
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  text-transform: capitalize;
+}
+
+.user-email-display {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-900);
+  font-weight: 600;
+}
+
+.btn-logout-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: 0.5rem var(--spacing-md);
+  color: var(--color-primary);
+  background: transparent;
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  margin-left: var(--spacing-md);
+}
+
+.btn-logout-header:hover {
+  background-color: #ef4444; /* red-500 */
+  border-color: #ef4444;
+  color: var(--color-white);
+}
